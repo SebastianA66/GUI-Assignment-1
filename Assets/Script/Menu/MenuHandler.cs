@@ -18,10 +18,12 @@ public class MenuHandler : MonoBehaviour
     public bool isFullScreen;
     public Dropdown resDropdown;
 
-    // Use this for initialization
+   
     void Start()
     {
-        mainAudio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        // Find Audio
+        mainAudio = GameObject.Find("Audio Source").GetComponent<AudioSource>(); 
+        // Find light
         dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
 
 
@@ -30,11 +32,13 @@ public class MenuHandler : MonoBehaviour
     }
     private void Awake()
     {
+        // Find Audio for slider
         volSlider.value = PlayerPrefs.GetFloat("Audio Source");
+        // Find brightness for slider
         brightSlider.value = PlayerPrefs.GetFloat("Directional Light");
     }
 
-    // Update is called once per frame
+    
 
     public void LoadGame()
     {
@@ -44,20 +48,25 @@ public class MenuHandler : MonoBehaviour
     }
     public void ExitGame()
     {
+        // Closes the game
         Application.Quit();
 
+        // Enables the game to close during the editor
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
     public void ToggleOption()
     {
+        // Switch between opeions being on and off
         OptionToggle();
     }
     bool OptionToggle()
     {
+        // if options are on
         if (showOption)
         {
+
             showOption = false;
             mainMenu.SetActive(true);
             optionMenu.SetActive(false);

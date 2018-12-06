@@ -7,15 +7,17 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour {
 
     public static bool GameIsPaused = false;
-
     public GameObject pauseMenu, optionMenu;
     public bool showMenu;
     public AudioSource soundAudio;
     public Light dirLight;
-
+    public Slider ambientSlider;
     public Slider soundSlider;
     public Slider lightSlider;
-
+    public Vector2[] res = new Vector2[7];
+    public int resIndex;
+    public bool isFullScreen;
+    public Dropdown resDropdown;
     public GameObject cam1;
     public GameObject mainCam;
     public GameObject player;
@@ -28,9 +30,9 @@ public class PauseMenu : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
 
-        soundAudio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        //soundAudio = GameObject.Find("Audio Source").GetComponent<AudioSource>();
         dirLight = GameObject.Find("Directional Light").GetComponent<Light>();
-        soundSlider.value = PlayerPrefs.GetFloat("Audio Source");
+        //soundSlider.value = PlayerPrefs.GetFloat("Audio Source");
         lightSlider.value = PlayerPrefs.GetFloat("Directional Light");
 
      
@@ -133,7 +135,16 @@ public class PauseMenu : MonoBehaviour {
         }
 
     }
-   public void Back()
+    public void Ambient()
+    {
+        RenderSettings.ambientIntensity = ambientSlider.value;
+    }
+    public void Resolution()
+    {
+        resIndex = resDropdown.value;
+        Screen.SetResolution((int)res[resIndex].x, (int)res[resIndex].y, isFullScreen);
+    }
+    public void Back()
     {
         showMenu = false;
         pauseMenu.SetActive(true);
