@@ -66,23 +66,34 @@ public class MenuHandler : MonoBehaviour
         // if options are on
         if (showOption)
         {
-
+            //Options hidden
             showOption = false;
+            //mainMenu visable
             mainMenu.SetActive(true);
+            // Options hidden
             optionMenu.SetActive(false);
             return false;
 
         }
         else
         {
+            // Options visable
             showOption = true;
+            // mainMenu hidden
             mainMenu.SetActive(false);
+            // Options visable
             optionMenu.SetActive(true);
+            // Attaching the audio to the volume slider
             volSlider = GameObject.Find("AudioSlider").GetComponent<Slider>();
+            // Attaching the brightness to the brightness slider
             brightSlider = GameObject.Find("Brightness").GetComponent<Slider>();
+            // Attaching the resolution to the dropdown bar
             resDropdown = GameObject.Find("Resolution").GetComponent<Dropdown>();
+            // Audio adjustable by volume slider
             volSlider.value = mainAudio.volume;
+            // Brightness adjustable by brightness slider
             brightSlider.value = dirLight.intensity;
+            // Ambient adjustable by ambient slider
             ambientSlider.value = RenderSettings.ambientIntensity;
             return true;
         }
@@ -107,8 +118,11 @@ public class MenuHandler : MonoBehaviour
     }
     public void Back()
     {
+        // Options hidden
         showOption = false;
+        // mainMenu visable
         mainMenu.SetActive(true);
+        // Options hidden
         optionMenu.SetActive(false);
         return;
     }

@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour {
+public class PauseMenu : MonoBehaviour
+{
 
     public static bool GameIsPaused = false;
     public GameObject pauseMenu, optionMenu;
@@ -24,8 +25,9 @@ public class PauseMenu : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-        
+    void Start()
+    {
+
         Time.timeScale = 1f;
         player = GameObject.FindGameObjectWithTag("Player");
         mainCam = GameObject.FindGameObjectWithTag("MainCamera");
@@ -35,52 +37,64 @@ public class PauseMenu : MonoBehaviour {
         //soundSlider.value = PlayerPrefs.GetFloat("Audio Source");
         lightSlider.value = PlayerPrefs.GetFloat("Directional Light");
 
-     
+
         return;
 
     }
 
     // Update is called once per frame
-    
+
     void Update()
     {
+        // When escape is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // Pause the game
             Pause();
         }
     }
-   public void Resume ()
+    //When the game is resumed
+    public void Resume()
     {
-        
+        // pause menu is false
         pauseMenu.SetActive(false);
+        // options menu is false
         optionMenu.SetActive(false);
+        // real time is resumed
         Time.timeScale = 1f;
+        // enable the controller
         player.GetComponent<Controller>().enabled = true;
+        // mouseLook is enabled
         player.GetComponent<MouseLook>().enabled = true;
         mainCam.GetComponent<MouseLook>().enabled = true;
         GameIsPaused = false;
-        
+
 
     }
+    // When the game is paused
     void Pause()
     {
-        
+        // Pause menu is visable
         pauseMenu.SetActive(true);
+        // options menu is hidden 
         optionMenu.SetActive(false);
+        // real time is paused
         Time.timeScale = 0f;
 
+        // disable the controller
         player.GetComponent<Controller>().enabled = false;
         player.GetComponent<MouseLook>().enabled = false;
         mainCam.GetComponent<MouseLook>().enabled = false;
         GameIsPaused = true;
+        // cursor is able to be seen
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
-       
+
+
 
     }
 
-    public void LoadMenu ()
+    public void LoadMenu()
     {
         Time.timeScale = 1f;
         PlayerPrefs.SetFloat("Audio Source", soundAudio.volume);
@@ -89,6 +103,7 @@ public class PauseMenu : MonoBehaviour {
     }
     public void Exitmenu()
     {
+        // Exits game in the editor
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
@@ -96,14 +111,17 @@ public class PauseMenu : MonoBehaviour {
     }
     public void ToggleOption()
     {
+        // toggles the options when pressed
         OptionToggle();
     }
     public void Volume()
     {
+        // Attaches volume to slider
         soundAudio.volume = soundSlider.value;
     }
     public void Brightness()
     {
+        // attaches brightness to slider
         dirLight.intensity = lightSlider.value;
 
     }
@@ -121,15 +139,15 @@ public class PauseMenu : MonoBehaviour {
         {
 
             showMenu = true;
-            
+
             pauseMenu.SetActive(false);
             optionMenu.SetActive(true);
             soundSlider = GameObject.Find("SoundSlider").GetComponent<Slider>();
             lightSlider = GameObject.Find("BrightnessSlider").GetComponent<Slider>();
-            
+
             soundSlider.value = soundAudio.volume;
             lightSlider.value = dirLight.intensity;
-            
+
 
             return true;
         }
